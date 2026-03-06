@@ -31,5 +31,13 @@ public class ComplainService {
         complain.setCategory(writeDTO.getCategory());
         complain.setContent(writeDTO.getContent());
         complain.setTitle(writeDTO.getTitle());
+        // 민원테이블에 저장하기
+        complainRepo.save(complain);
+
+        // 민원 테이블에 저장하고 저장된 id컬럼값 가져오기
+        Complain data = complainRepo.find(complain.getUserId());
+
+        // 이미지나 파일은 민원테이블의 id컬럼값이 필요하므로
+        // 민원 테이블 저장한 이후에 한다.
     }
 }

@@ -22,14 +22,14 @@ public class ComplainController {
 
     // 민원 작성 데이터를 처리 - 이미지도 같이 처리
     @PostMapping("/writeSave")
-    public String writeSave(@Valid ComplainWriteDTO writeDTO, BindingResult bindingResult ,
+    public String writeSave(@Valid ComplainWriteDTO complainWriteDTO, BindingResult bindingResult ,
                             @RequestParam("imgFile")List<MultipartFile> multipartFiles, Principal principal, Model model){
         if(bindingResult.hasErrors()){
             return "board/write";
         }
         // 잘 입력 했다면 테이블에 저장
         try{
-            complainService.save(principal.getName() ,writeDTO ,multipartFiles);
+            complainService.save(principal.getName() ,complainWriteDTO ,multipartFiles);
         }catch(IllegalStateException e){
             model.addAttribute("message","이미지 또는 파일 업로드 실패");
             return "board/write";
@@ -40,7 +40,7 @@ public class ComplainController {
     // 민원 작성 페이지 요청 - 민원신청 클릭하면
     @GetMapping("/write")
     public String write(Model model){
-        model.addAttribute("writeDTO",new ComplainWriteDTO());
+        model.addAttribute("complainWriteDTO",new ComplainWriteDTO());
         return "board/write";
     }
 

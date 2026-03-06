@@ -3,7 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.complaint.Repository.ComplainRepo">
-       <insert id="save" parameterType="" result
+       <insert id="save" parameterType="com.complaint.Entity.Complain" >
+              insert into complain(user_id, title, content, category) values(#{userId},#{title},#{content},#{category})
+       </insert>
+
+       <select id="find" resultType="com.complaint.Entity.Complain">
+              select * from complain where user_id = #{userId}
+              order by created_at desc limit 1
+
+       </select>
 
 
 

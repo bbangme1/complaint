@@ -16,5 +16,4 @@ public class ComplainWriteDTO {
 
     @NotBlank( message = "민원 유형은 필수다")
     private String category;
-
 }

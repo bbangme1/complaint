@@ -4,7 +4,7 @@
 
 <div layout:fragment="main">
     <div class="w-[500px] mx-auto mt-5">                                    <!--  enctype- 인풋타입이 파일일때 꼭 필요-->
-      <form th:object="${writeDTO}" method="post" th:action="@{/writeSave}" enctype="multipart/form-data">
+      <form th:object="${complainWriteDTO}" method="post" th:action="@{/writeSave}" enctype="multipart/form-data">
          제목 : <input class="border rounded" type="text" th:field="*{title}"> <br>
         민원 유형 : <select class="broder rounded" th:field="*{category}">
                  <option value = "시설">시설</option>
