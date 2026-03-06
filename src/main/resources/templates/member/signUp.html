@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<div layout:fragment="main">
+    <script>
+        var msg="[[${errorMsg}]]"
+        if(msg){alert(msg)}
+
+    </script>
+
+     <div class="w-[400px] mx-auto py-[50px]">
+         <form th:object="${userDTO}" method="post" th:action="@{/signUp}">
+             <input type="hidden" th:name="${_csrf.parameterName}" th:values="${_csrf.token}">
+
+             아이디 : <input type="text" th:field="*{userId}"> <br>
+             <p class = "text-[10px] text-red-600" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></p>
+             비밀번호 : <input type="password" th:field="*{password}"> <br>
+             <p class = "text-[10px] text-red-600" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+             이름 : <input type="text" th:field="*{name}"> <br>
+             <p class = "text-[10px] text-red-600" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+             연락처 : <input type="text" th:field="*{tel}"> <br>
+             <p class = "text-[10px] text-red-600" th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"></p>
+             이메일 : <input type="email" th:field="*{email}"> <br>
+             <p class = "text-[10px] text-red-600" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+             <button> 가입 </button>
+
+         </form>
+
+     </div>
+
+</div>
+
+</html>

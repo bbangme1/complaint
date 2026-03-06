@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+      <header th:fragment="header" class="w-full  sticky top-0 z-50 mb-[50px] py-[10px] shadow bg-white">
+        <nav class="flex items-center mx-auto w-[600px] justify-between py-3">
+          <div class="w-[150px]">
+            <a th:href="@{/}" class="bg-[url('/image/logo.png')]  rounded-md bg-cover bg-center bg-no-repeat block w-full h-[50px]">
+
+
+            </a>
+          </div>
+            <ul class="flex font-bold gap-8 items-center text-gray-700">
+              <li>
+                  <a th:href="@{/write}" class="relative pb-2 hover:text-blue-600 transition group">
+                      민원신청
+                      <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+              </li>
+
+            <li>
+                <a th:href="@{/}" class="relative pb-2 hover:text-blue-600 transition group">
+                    민원조회
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/}" class="relative pb-2 hover:text-blue-600 transition group">
+                    민원안내
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/}" class="relative pb-2 hover:text-blue-600 transition group">
+                    고객센터
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+                <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                    <a th:href="@{/}" class="relative pb-2 hover:text-blue-600 transition group">
+                       담당자 배정
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+          <button type="button" id="toggle" class="fixed right-1 top-1/5 -translate-y-1/2 z-[200] w-12 h-12 rounded-full overflow-hidden cursor-pointer
+                        ring-2 ring-blue-400/60 shadow-lg select-none">
+               <span class="absolute inset-[-30%] rounded-full
+               bg-gradient-to-br from-blue-400 via-blue-600 to-cyan-400
+               opacity-90 blur-[1px]"
+                     style="animation: waterMove 4s linear infinite;"></span>
+              <span class="absolute inset-[-35%] rounded-full
+               bg-gradient-to-tr from-cyan-300 via-blue-500 to-blue-700
+               opacity-60 blur-[2px] mix-blend-screen"
+                    style="animation: waterMove 6s linear infinite reverse;"></span>
+              <span class="bsolute inset-0
+               bg-gradient-to-r from-white/0 via-white/35 to-white/0"
+                    style="animation: shimmer 1.8s ease-in-out infinite;"></span>
+
+          </button>
+          <div id="authSlide"
+               class="fixed right-16 top-1/5 -translate-y-1/2 z-[199]
+         bg-white border border-gray-200 shadow-xl rounded-full
+         px-3 py-2 flex items-center gap-2
+         translate-x-[140%] opacity-100 pointer-events-none
+         transition-all duration-300">
+              <div sec:authorize="isAuthenticated()"
+              class="flex items-center justify-between w-full">
+                  <span sec:authentication="name"></span>
+                  <a th:href="@{/logout}">로그아웃</a>
+
+
+              </div>
+              <div sec:authorize="isAnonymous()" class="flex items-center gap-2">
+
+                  <a th:href="@{/signIn}"
+                     class="px-4 py-2 rounded-full border border-blue-600 text-blue-600
+                    hover:bg-blue-600 hover:text-white transition">
+                      로그인
+                  </a>
+
+                  <a th:href="@{/signUp}"
+                     class="px-4 py-2 rounded-full bg-blue-600 text-white
+                    hover:bg-blue-700 transition">
+                      회원가입
+                  </a>
+
+              </div>
+          </div>
+          <script>
+              const toggleBtn = document.getElementById('toggle');
+              const slide = document.getElementById('authSlide');
+
+              function openSlide() {
+                  slide.classList.remove('translate-x-[140%]', 'opacity-0', 'pointer-events-none');
+                  slide.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+              }
+
+              function closeSlide() {
+                  slide.classList.add('translate-x-[140%]', 'opacity-0', 'pointer-events-none');
+                  slide.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+              }
+
+              let opened = false;
+
+              toggleBtn.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  opened ? closeSlide() : openSlide();
+                  opened = !opened;
+              });
+
+              // 바깥 클릭하면 닫기
+              document.addEventListener('click', () => {
+                  if (!opened) return;
+                  closeSlide();
+                  opened = false;
+              });
+
+              // 슬라이드 내부 클릭은 닫히지 않게
+              slide.addEventListener('click', (e) => e.stopPropagation());
+
+              // ESC 닫기
+              window.addEventListener('keydown', (e) => {
+                  if (e.key === 'Escape' && opened) {
+                      closeSlide();
+                      opened = false;
+                  }
+              });
+          </script>
+          <style>
+              @keyframes waterMove {
+                  0%{transform: translate(-10%, -10%) rotate(0deg);}
+                  50%{transform: translate(10%, 10%) rotate(180deg);}
+                  100%{transform: translate(-10%, -10%) rotate(360deg);}
+              }
+              @keyframes shimmer{
+                  0%{ transform: translateX(-120%); opacity: .0; }
+                  40%{ opacity: .35;}
+                  100%{ transform: translateX(120%); opacity: .0; }
+              }
+
+          </style>
+      </header>
+
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.complaint.Repository.UserRepo">
+    <insert id="save" parameterType="com.complaint.Entity.User">
+        insert into user2(userId, password , name,tel,email ,role) values(#{userId},#{password},#{name},#{tel},#{email},#{role})
+    </insert>
+
+    <select id="findById" parameterType="string" resultType="com.complaint.Entity.User">
+        select * from user2 where userId=#{userId}
+    </select>
+
+</mapper>

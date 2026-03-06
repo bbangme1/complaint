@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>DW민원</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+
+     <th:block th:replace="layout/header :: header"></th:block>
+
+     <th:block layout:fragment="main"></th:block>
+
+     <th:block th:replace="layout/footer :: foot"></th:block>
+</body>
+</html>
