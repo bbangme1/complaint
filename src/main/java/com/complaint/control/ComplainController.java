@@ -20,6 +20,21 @@ public class ComplainController {
     @Autowired
     private ComplainService complainService;
 
+    //민원 상세 페이지 요청
+    @GetMapping("/detail")
+    public String detail(@RequestParam("id") long id, Model model){
+        model.addAttribute("detail", complainService.getDetail(id));
+        return "board/detail";
+    }
+
+    // 민원 조회 - 로그인 계정별 작성 글만 조회
+    @GetMapping("/list")
+    public String listComplain(Model model, Principal principal){
+        String userName = principal.getName(); // 로그인 계정명
+        model.addAttribute("list",complainService.getList(userName));
+        return "board/list";
+    }
+
     // 민원 작성 데이터를 처리 - 이미지도 같이 처리
     @PostMapping("/writeSave")
     public String writeSave(@Valid ComplainWriteDTO complainWriteDTO, BindingResult bindingResult ,
@@ -30,11 +45,12 @@ public class ComplainController {
         // 잘 입력 했다면 테이블에 저장
         try{
             complainService.save(principal.getName() ,complainWriteDTO ,multipartFiles);
-        }catch(IllegalStateException e){
+        }catch(Exception e){
+            e.printStackTrace();
             model.addAttribute("message","이미지 또는 파일 업로드 실패");
             return "board/write";
         }
-        return "redirect:/write";
+        return "redirect:/";
     }
 
     // 민원 작성 페이지 요청 - 민원신청 클릭하면

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<div layout:fragment="main">
+    <div class="w-[800px] mx-auto mt-4"></div>
+        <h2 class="text-[25px] my-3 text-conter">민원 목록</h2>
+        <table class="w-full border-collapse">
+            <tr>
+                <th>번호</th> <th>제목</th> <th>작성일</th> <th>상태</th>
+            </tr>
+
+            <tr th:each=" row, stat : ${list}">
+                <td th:text="${stat.count}" class="boder-b border-gray-300"></td>
+                <td class="boder-b border-gray-300">
+                  <a th:href="@{/detail(id=${row.id})}" th:text="${row.title}"></a>
+                </td>
+                <td th:text="${row.createdAt}" class="boder-b border-gray-300"></td>
+                <td th:text="${row.status}" class="boder-b border-gray-300"></td>
+            </tr>
+        </table>
+</div>
+
+</html>

@@ -34,7 +34,7 @@ public class SecurityConfig {
                     ar -> ar
                             .requestMatchers("/","/image/**","/css/**","/js/**")
                             .permitAll()// 매처에 작성된 주소에 대해 모두 허용
-                            .requestMatchers("/error","/singUp").permitAll()//  /error 주소 허용
+                            .requestMatchers("/error","/singUp","/favicon.ico").permitAll()//  /error 주소 허용
                             .requestMatchers("/admin/**").hasRole("ADMIN")// 관리자 페이지는 권한이 ADMIN만 허용
                             .anyRequest().authenticated() // 나머지 모든 주소 요청은 로그인 해야 한다.  허용주소와 권한
         ).formLogin(
